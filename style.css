@@ -8,36 +8,49 @@ body {
 }
 
 #board {
-  width: 800px;
-  height: 800px;
+  width: 400px;
+  height: 400px;
   background-color: black;
   display: flex;
   flex-wrap: wrap;
 }
 
 .squareRow {
-  width: 800px;
-  height: 100px;
+  width: 400px;
+  height: 50px;
   background-color: white;
   border: solid 1px black;
 }
 
 .whiteSquare {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background-color: white;
   border: solid 1px black;
 }
 
 .blackSquare {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background-color: black;
   border: solid 1px black;
 }
 
-.checkersPiece {
+.redCheckersPiece {
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
+  background-color: red;
+}
+
+.greenCheckersPiece {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: green;
+}
+
+.noCheckersPiece {
+  width: 50px;
+  height: 50px;
 }
