@@ -55,20 +55,22 @@ function renderBoard () {
 
         const checkerPieces = document.createElement("div")
         squareElement.append(checkerPieces)
+        checkerPieces.setAttribute("row", rowIndex)
+        checkerPieces.setAttribute("column", columnIndex)
 
         //this is to show how the board on the screen will change based on the values in the board array in javascript
         if (board[rowIndex][columnIndex] === 1) {
           checkerPieces.classList.add("redCheckersPiece")
-          checkerPieces.setAttribute("row", rowIndex)
-          checkerPieces.setAttribute("column", columnIndex)
+          // checkerPieces.setAttribute("row", rowIndex)
+          // checkerPieces.setAttribute("column", columnIndex)
         } else if (board[rowIndex][columnIndex] === -1) {
           checkerPieces.classList.add("greenCheckersPiece")
-          checkerPieces.setAttribute("row", rowIndex)
-          checkerPieces.setAttribute("column", columnIndex)
+          // checkerPieces.setAttribute("row", rowIndex)
+          // checkerPieces.setAttribute("column", columnIndex)
         } else if (board[rowIndex][columnIndex] === 0) {
           checkerPieces.classList.add("noCheckersPiece")
-          checkerPieces.setAttribute("row", rowIndex)
-          checkerPieces.setAttribute("column", columnIndex)
+          // checkerPieces.setAttribute("row", rowIndex)
+          // checkerPieces.setAttribute("column", columnIndex)
         }
       })
   })
@@ -82,10 +84,17 @@ function handleClick (e) {
   const itemRow = parseInt(itemClicked.getAttribute("row"))
   const itemColumn = parseInt(itemClicked.getAttribute("column"))
 
-  if (board[itemRow][itemColumn] === 1) {
-    board[itemRow][itemColumn] = 0
-    
+  //scenario for green checker pieces
+  //currently testing automove
+  if (board[itemRow][itemColumn] === -1) {
+    if (board[itemRow-1][itemColumn-1] === 0) {
+      board[itemRow-1][itemColumn-1] = -1
+      board[itemRow][itemColumn] = 0
+    }
   }
+
+
+
 renderBoard()
 }
 
