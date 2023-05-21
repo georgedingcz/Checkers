@@ -4,8 +4,8 @@ let turn = "";
 let winner = "";
 
 //cached elements
-const player1Pieces = document.querySelector("#player1Pieces");
-const player2Pieces = document.querySelector("#player2Pieces");
+const playerRedPieces = document.querySelector("#playerRedPieces");
+const playerGreenPieces = document.querySelector("#playerGreenPieces");
 const playerTurn = document.querySelector("#playerTurn");
 const boardSection = document.querySelector("#board")
 
@@ -24,7 +24,7 @@ function initialise () {
     ["green",null,"green",null,"green",null,"green",null],
     [null,"green",null,"green",null,"green",null,"green"],
   ];
-  turn = "green";
+  turn = "Green";
   winner = null;
   render()
 }
@@ -89,154 +89,180 @@ function handleClick (e) {
 
   //movements and options
   
-  if (turn === "green") {
+  //green's turn
+  //showing options of selected piece
+  if (turn === "Green" && board[itemRow][itemColumn] === "green") {
     //option(s) appears
-    //(green) both sides
-    if (board[itemRow][itemColumn] === "green" && board[itemRow-1][itemColumn-1] === "nothing" && board[itemRow-1][itemColumn+1] === "nothing") {
-      board[itemRow-1][itemColumn-1] = "option"
+    //left side red and right side blank
+    if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-1][itemColumn+1] === "nothing") {
+      board[itemRow-2][itemColumn-2] = "option"
       board[itemRow-1][itemColumn+1] = "option"
-      board[itemRow][itemColumn] = "optionGreen"
-    //(green) left side only   
-    } else if (board[itemRow][itemColumn] === "green" && board[itemRow-1][itemColumn-1] === "nothing") {
+    //right side red and left side blank
+    } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-1][itemColumn-1] === "nothing") {
+      board[itemRow-2][itemColumn+2] = "option"
       board[itemRow-1][itemColumn-1] = "option"
-      board[itemRow][itemColumn] = "optionGreen"   
-    //(green) right side only
-    } else if (board[itemRow][itemColumn] === "green" && board[itemRow-1][itemColumn+1] === "nothing") {
-      board[itemRow-1][itemColumn+1] = "option"
-      board[itemRow][itemColumn] = "optionGreen"   
+    //both sides blank
+    } else if (board[itemRow-1][itemColumn-1] === "nothing" && board[itemRow-1][itemColumn+1] === "nothing") {
+      board[itemRow-1][itemColumn-1] = "option"
+      board[itemRow-1][itemColumn+1] = "option"  
+    //left side blank   
+    } else if (board[itemRow-1][itemColumn-1] === "nothing") {
+      board[itemRow-1][itemColumn-1] = "option"
+    //right side blank
+    } else if (board[itemRow-1][itemColumn+1] === "nothing") {
+      board[itemRow-1][itemColumn+1] = "option" 
     } 
-    //option(s) selected
-    if (board[itemRow][itemColumn] === "option") {
-      //there were two options and the left option was selected
-      if (board[itemRow+1][itemColumn+1] === "optionGreen" && board[itemRow][itemColumn+2] === "option") {
-        board[itemRow+1][itemColumn+1] = "nothing"
-        board[itemRow][itemColumn+2] = "nothing"
-        board[itemRow][itemColumn] = "green"
-        turn = "red"
-      //there were two options and the right option was selected
-      } else if (board[itemRow+1][itemColumn-1] === "optionGreen" && board[itemRow][itemColumn-2] === "option") {
-        board[itemRow+1][itemColumn-1] = "nothing"
-        board[itemRow][itemColumn-2] = "nothing"
-        board[itemRow][itemColumn] = "green"
-        turn = "red"
-      //only the left option was available and it was selected
-      } else if (board[itemRow+1][itemColumn+1] === "optionGreen") {
-        board[itemRow+1][itemColumn+1] = "nothing"
-        board[itemRow][itemColumn] = "green"
-        turn = "red"
-      //only the right option was available and it was selected
-      } else if (board[itemRow+1][itemColumn-1] === "optionGreen") {
-        board[itemRow+1][itemColumn-1] = "nothing"
-        board[itemRow][itemColumn] = "green"
-        turn = "red"
-      }
-    }
-  } else if (turn === "red") {
-    //option(s) appears
-    //(red) both sides
-    if (board[itemRow][itemColumn] === "red" && board[itemRow+1][itemColumn-1] === "nothing" && board[itemRow+1][itemColumn+1] === "nothing") {
-      board[itemRow+1][itemColumn-1] = "option"
-      board[itemRow+1][itemColumn+1] = "option"
-      board[itemRow][itemColumn] = "optionRed"
-    //(red) left side only   
-    } else if (board[itemRow][itemColumn] === "red" && board[itemRow+1][itemColumn-1] === "nothing") {
-      board[itemRow+1][itemColumn-1] = "option"
-      board[itemRow][itemColumn] = "optionRed"   
-    //(red) right side only
-    } else if (board[itemRow][itemColumn] === "red" && board[itemRow+1][itemColumn+1] === "nothing") {
-      board[itemRow+1][itemColumn+1] = "option"
-      board[itemRow][itemColumn] = "optionRed"   
-    } 
-    //option(s) selected
-    if (board[itemRow][itemColumn] === "option") {
-      //there were two options and the left option was selected
-      if (board[itemRow-1][itemColumn+1] === "optionRed" && board[itemRow][itemColumn+2] === "option") {
-        board[itemRow-1][itemColumn+1] = "nothing"
-        board[itemRow][itemColumn+2] = "nothing"
-        board[itemRow][itemColumn] = "red"
-        turn = "green"
-      //there were two options and the right option was selected
-      } else if (board[itemRow-1][itemColumn-1] === "optionRed" && board[itemRow][itemColumn-2] === "option") {
-        board[itemRow-1][itemColumn-1] = "nothing"
-        board[itemRow][itemColumn-2] = "nothing"
-        board[itemRow][itemColumn] = "red"
-        turn = "green"
-      //only the left option was available and it was selected
-      } else if (board[itemRow-1][itemColumn+1] === "optionRed") {
-        board[itemRow-1][itemColumn+1] = "nothing"
-        board[itemRow][itemColumn] = "red"
-        turn = "green"
-      //only the right option was available and it was selected
-      } else if (board[itemRow-1][itemColumn-1] === "optionRed") {
-        board[itemRow-1][itemColumn-1] = "nothing"
-        board[itemRow][itemColumn] = "red"
-        turn = "green"
-      }
-    }
+    //selected green checker turns to optionGreen
+    board[itemRow][itemColumn] = "optionGreen"
   }
-  //(green) what happens when the option is selected
-  // if (board[itemRow][itemColumn] === "option") {
-  //   //there were two options and the left option was selected
-  //   if (board[itemRow+1][itemColumn+1] === "optionGreen" && board[itemRow][itemColumn+2] === "option") {
-  //     board[itemRow+1][itemColumn+1] = "nothing"
-  //     board[itemRow][itemColumn+2] = "nothing"
-  //     board[itemRow][itemColumn] = "green"
-  //   //there were two options and the right option was selected
-  //   } else if (board[itemRow+1][itemColumn-1] === "optionGreen" && board[itemRow][itemColumn-2] === "option") {
-  //     board[itemRow+1][itemColumn-1] = "nothing"
-  //     board[itemRow][itemColumn-2] = "nothing"
-  //     board[itemRow][itemColumn] = "green"
-  //   //only the left option was available and it was selected
-  //   } else if (board[itemRow+1][itemColumn+1] === "optionGreen") {
-  //     board[itemRow+1][itemColumn+1] = "nothing"
-  //     board[itemRow][itemColumn] = "green"
-  //   //only the right option was available and it was selected
-  //   } else if (board[itemRow+1][itemColumn-1] === "optionGreen") {
-  //     board[itemRow+1][itemColumn-1] = "nothing"
-  //     board[itemRow][itemColumn] = "green"
-  //   }
+  
+  //green's turn
+  //option selected
+  if (turn === "Green" && board[itemRow][itemColumn] === "option") {
+    console.log("test")
+    //two options with left being red and right being blank; left option was selected
+    if (board[itemRow+2][itemColumn+2] === "optionGreen" && board[itemRow+1][itemColumn+3] === "option") {
+      board[itemRow+2][itemColumn+2] = "nothing"
+      board[itemRow+1][itemColumn+3] = "nothing"
+      //red piece is removed
+      board[itemRow+1][itemColumn+1] = "nothing"
+    //two options with right being red and left being blank; right option was selected
+    } else if (board[itemRow+2][itemColumn-2] === "optionGreen" && board[itemRow+1][itemColumn-3] === "option") {
+      board[itemRow+2][itemColumn-2] = "nothing"
+      board[itemRow+1][itemColumn-3] = "nothing"
+      //red piece is removed
+      board[itemRow+1][itemColumn-1] = "nothing"
+    //two blank options and the left was selected
+    }else if (board[itemRow+1][itemColumn+1] === "optionGreen" && board[itemRow][itemColumn+2] === "option") {
+      board[itemRow+1][itemColumn+1] = "nothing"
+      board[itemRow][itemColumn+2] = "nothing"
+    //two blank options and the right was selected
+    } else if (board[itemRow+1][itemColumn-1] === "optionGreen" && board[itemRow][itemColumn-2] === "option") {
+      board[itemRow+1][itemColumn-1] = "nothing"
+      board[itemRow][itemColumn-2] = "nothing"
+    //only blank left option was available and it was selected
+    } else if (board[itemRow+1][itemColumn+1] === "optionGreen") {
+      board[itemRow+1][itemColumn+1] = "nothing"
+    //only blank right option was available and it was selected
+    } else if (board[itemRow+1][itemColumn-1] === "optionGreen") {
+      board[itemRow+1][itemColumn-1] = "nothing"
+    }
+    //selected option turns to green
+    board[itemRow][itemColumn] = "green" 
+    //change turn to red
+    turn = "Red"   
+  }
+
+  // if (turn === "Green" && board[itemRow][itemColumn] === "optionGreen") {
+  //   console.log("lets see")
+  //   // board.forEach(function (boardRow){
+  //   //   boardRow.forEach(function(piece) {
+  //   //     if (piece === "option") {
+  //   //       piece = "nothing"
+  //   //     }
+  //   //   })
+  //   // })
   // }
 
-  //(red) what happens when the option is selected
-  // if (board[itemRow][itemColumn] === "option") {
-  //   //there were two options and the left option was selected
-  //   if (board[itemRow-1][itemColumn+1] === "optionRed" && board[itemRow][itemColumn+2] === "option") {
-  //     board[itemRow-1][itemColumn+1] = "nothing"
-  //     board[itemRow][itemColumn+2] = "nothing"
-  //     board[itemRow][itemColumn] = "red"
-  //   //there were two options and the right option was selected
-  //   } else if (board[itemRow-1][itemColumn-1] === "optionRed" && board[itemRow][itemColumn-2] === "option") {
-  //     board[itemRow-1][itemColumn-1] = "nothing"
-  //     board[itemRow][itemColumn-2] = "nothing"
-  //     board[itemRow][itemColumn] = "red"
-  //   //only the left option was available and it was selected
-  //   } else if (board[itemRow-1][itemColumn+1] === "optionRed") {
-  //     board[itemRow-1][itemColumn+1] = "nothing"
-  //     board[itemRow][itemColumn] = "red"
-  //   //only the right option was available and it was selected
-  //   } else if (board[itemRow-1][itemColumn-1] === "optionRed") {
-  //     board[itemRow-1][itemColumn-1] = "nothing"
-  //     board[itemRow][itemColumn] = "red"
-  //   }
-  // }
-
-
-
-
+  //red's turn
+  //showing options of selected piece
+  if (turn === "Red" && board[itemRow][itemColumn] === "red") {
+    //option(s) appears
+    //left side green and right side blank
+    if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+1][itemColumn+1] === "nothing") {
+      board[itemRow+2][itemColumn-2] = "option"
+      board[itemRow+1][itemColumn+1] = "option"
+    //right side green and left side blank 
+    } else if (board[itemRow+1][itemColumn+1] === "green" && board[itemRow+1][itemColumn-1] === "nothing") {
+      board[itemRow+2][itemColumn+2] = "option"
+      board[itemRow+1][itemColumn-1] = "option"
+    //both sides blank   
+    } else if (board[itemRow+1][itemColumn-1] === "nothing" && board[itemRow+1][itemColumn+1] === "nothing") {
+      board[itemRow+1][itemColumn-1] = "option"
+      board[itemRow+1][itemColumn+1] = "option"
+    //left side blank   
+    } else if (board[itemRow+1][itemColumn-1] === "nothing") {
+      board[itemRow+1][itemColumn-1] = "option"
+    //right side blank
+    } else if (board[itemRow+1][itemColumn+1] === "nothing") {
+      board[itemRow+1][itemColumn+1] = "option"
+    } 
+    //selected red checker turns to optionRed
+    board[itemRow][itemColumn] = "optionRed"   
+  }
+  //red's turn
+  //option selected
+  if (turn === "Red" && board[itemRow][itemColumn] === "option") {
+    //two options with left being green and right being blank; left option was selected
+    if (board[itemRow-2][itemColumn+2] === "optionRed" && board[itemRow-1][itemColumn+3] === "option") {
+      board[itemRow-2][itemColumn+2] = "nothing"
+      board[itemRow-1][itemColumn+3] = "nothing"
+      //green piece is removed
+      board[itemRow-1][itemColumn+1] = "nothing"
+    //two options with right being green and left being blank; right option was selected
+    } else if (board[itemRow-2][itemColumn-2] === "optionRed" && board[itemRow-1][itemColumn-3] === "option") {
+      board[itemRow-2][itemColumn-2] = "nothing"
+      board[itemRow-1][itemColumn-3] = "nothing"
+      //green piece is removed
+      board[itemRow-1][itemColumn-1] = "nothing"
+    //two options and the left option was selected
+    } else if (board[itemRow-1][itemColumn+1] === "optionRed" && board[itemRow][itemColumn+2] === "option") {
+      board[itemRow-1][itemColumn+1] = "nothing"
+      board[itemRow][itemColumn+2] = "nothing"
+    //two options and the right option was selected
+    } else if (board[itemRow-1][itemColumn-1] === "optionRed" && board[itemRow][itemColumn-2] === "option") {
+      board[itemRow-1][itemColumn-1] = "nothing"
+      board[itemRow][itemColumn-2] = "nothing"
+    //only the left option was available and it was selected
+    } else if (board[itemRow-1][itemColumn+1] === "optionRed") {
+      board[itemRow-1][itemColumn+1] = "nothing"
+    //only the right option was available and it was selected
+    } else if (board[itemRow-1][itemColumn-1] === "optionRed") {
+      board[itemRow-1][itemColumn-1] = "nothing"
+    }
+    //selected option turns to red
+    board[itemRow][itemColumn] = "red" 
+    //change turn to green
+    turn = "Green" 
+  }
   render()
 }
 
 function renderRedRemaining () {
+  let redCount = 0
+  board.forEach(function (boardRow){
+    boardRow.forEach(function(piece) {
+      if (piece === "red") {
+        redCount ++
+      }
+    })
+    return redCount
+  })
+  playerRedPieces.innerText = `Player Red has ${redCount} pieces remaining`
 }
 
 function renderGreenRemaining () {
+  let greenCount = 0
+  board.forEach(function (boardRow){
+    boardRow.forEach(function(piece) {
+      if (piece === "green") {
+        greenCount ++
+      }
+    })
+    return greenCount
+  })
+  playerGreenPieces.innerText = `Player Green has ${greenCount} pieces remaining`
+}
+
+function renderTurn () {
+  playerTurn.innerText = `It is currently Player ${turn}'s turn`
 }
 
 function render () {
   renderBoard()
   renderRedRemaining()
   renderGreenRemaining()
+  renderTurn()
 }
 
-render()
 
