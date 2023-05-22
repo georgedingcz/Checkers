@@ -100,8 +100,6 @@ const countPieces = function () {
   return greenCount, redCount
 })}
 
-
-
 //function that handles what happens what a click happens
 function handleClick (e) {
   const itemClicked = e.target
@@ -116,14 +114,12 @@ function handleClick (e) {
       if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing" && board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
         board[itemRow-2][itemColumn-2] = "option"
         board[itemRow-2][itemColumn+2] = "option"
-      //left side red and right side blank
-      } else if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing" && board[itemRow-1][itemColumn+1] === "nothing") {
+      //left side red
+      } else if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing") {
         board[itemRow-2][itemColumn-2] = "option"
-        board[itemRow-1][itemColumn+1] = "option"
-      //right side red and left side blank
-      } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing" && board[itemRow-1][itemColumn-1] === "nothing") {
+      //right side red
+      } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
         board[itemRow-2][itemColumn+2] = "option"
-        board[itemRow-1][itemColumn-1] = "option"
       //both sides blank
       } else if (board[itemRow-1][itemColumn-1] === "nothing" && board[itemRow-1][itemColumn+1] === "nothing") {
         board[itemRow-1][itemColumn-1] = "option"
@@ -134,24 +130,18 @@ function handleClick (e) {
       //right side blank
       } else if (board[itemRow-1][itemColumn+1] === "nothing") {
         board[itemRow-1][itemColumn+1] = "option"
-      //left side red
-      } else if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing") {
-        board[itemRow-2][itemColumn-2] = "option"
-      //right side red
-      } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
-        board[itemRow-2][itemColumn+2] = "option"
-      }
+      } 
       //selected green checker turns to optionGreen
       board[itemRow][itemColumn] = "optionGreen"
 
     // selecting the option
     } else if (board[itemRow][itemColumn] === "option") {
-      //left option being red and was selected
+      //left being red and was selected
       if (board[itemRow+2][itemColumn+2] === "optionGreen") {
         //red piece is removed
         board[itemRow+1][itemColumn+1] = "nothing"
         clear()
-      //right option being red and was selected
+      //right being red and was selected
       } else if (board[itemRow+2][itemColumn-2] === "optionGreen") {
         //red piece is removed
         board[itemRow+1][itemColumn-1] = "nothing"
@@ -177,14 +167,12 @@ function handleClick (e) {
       if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+2][itemColumn-2] === "nothing" && board[itemRow+1][itemColumn+1] === "green" && board[itemRow+2][itemColumn+2] === "nothing") {
         board[itemRow+2][itemColumn-2] = "option"
         board[itemRow+2][itemColumn+2] = "option"
-        //left side green and right side blank
-      } else if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+2][itemColumn-2] === "nothing" && board[itemRow+1][itemColumn+1] === "nothing") {
+      //left side green
+      } else if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+2][itemColumn-2] === "nothing") {
         board[itemRow+2][itemColumn-2] = "option"
-        board[itemRow+1][itemColumn+1] = "option"
-      //right side green and left side blank
-      } else if (board[itemRow+1][itemColumn+1] === "green" && board[itemRow+2][itemColumn+2] === "nothing" && board[itemRow+1][itemColumn-1] === "nothing") {
+      //right side green
+      } else if (board[itemRow+1][itemColumn+1] === "green" && board[itemRow+2][itemColumn+2] === "nothing") {
         board[itemRow+2][itemColumn+2] = "option"
-        board[itemRow+1][itemColumn-1] = "option"
       //both sides blank
       } else if (board[itemRow+1][itemColumn-1] === "nothing" && board[itemRow+1][itemColumn+1] === "nothing") {
         board[itemRow+1][itemColumn-1] = "option"
@@ -195,24 +183,18 @@ function handleClick (e) {
       //right side blank
       } else if (board[itemRow+1][itemColumn+1] === "nothing") {
         board[itemRow+1][itemColumn+1] = "option"
-      //left side green 
-      } else if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+2][itemColumn-2] === "nothing") {
-        board[itemRow+2][itemColumn-2] = "option"
-      //right side green
-      } else if (board[itemRow+1][itemColumn+1] === "green" && board[itemRow+2][itemColumn+2] === "nothing") {
-        board[itemRow+2][itemColumn+2] = "option"
       } 
       //selected green checker turns to optionGreen
       board[itemRow][itemColumn] = "optionRed"
 
     // selecting the option
     } else if (board[itemRow][itemColumn] === "option") {
-      //left option being green and was selected
+      //left being green and was selected
       if (board[itemRow-2][itemColumn+2] === "optionRed") {
         //green piece is removed
         board[itemRow-1][itemColumn+1] = "nothing"
         clear()
-      //right option being green and was selected
+      //right being green and was selected
       } else if (board[itemRow-2][itemColumn-2] === "optionRed") {
         //green piece is removed
         board[itemRow-1][itemColumn-1] = "nothing"
