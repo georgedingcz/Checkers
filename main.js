@@ -16,6 +16,8 @@ function initialise () {
   board = [
     [],
     [],
+    [],
+    [],
     ["red",null,"red",null,"red",null,"red",null],
     [null,"red",null,"red",null,"red",null,"red"],
     ["red",null,"red",null,"red",null,"red",null],
@@ -24,6 +26,8 @@ function initialise () {
     [null,"green",null,"green",null,"green",null,"green"],
     ["green",null,"green",null,"green",null,"green",null],
     [null,"green",null,"green",null,"green",null,"green"],
+    [],
+    [],
     [],
     [],
   ];
@@ -118,59 +122,97 @@ const countPieces = function () {
 //function that handles what happens what a click happens
 function handleClick (e) {
   const itemClicked = e.target
-  const itemRow = parseInt(itemClicked.getAttribute("row"))
-  const itemColumn = parseInt(itemClicked.getAttribute("column"))
+  const r = parseInt(itemClicked.getAttribute("row"))
+  const c = parseInt(itemClicked.getAttribute("column"))
 
   //movements and options
   if (turn === "Green") {
 
     //letting the options appear
-    if (board[itemRow][itemColumn] === "green" && noOption() === 0) {
-      //both sides red
-      if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing" && board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
-        board[itemRow-2][itemColumn-2] = "option"
-        board[itemRow-2][itemColumn+2] = "option"
-      //left side red
-      } else if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing") {
-        board[itemRow-2][itemColumn-2] = "option"
-      //right side red
-      } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
-        board[itemRow-2][itemColumn+2] = "option"
-      //both sides blank
-      } else if (board[itemRow-1][itemColumn-1] === "nothing" && board[itemRow-1][itemColumn+1] === "nothing") {
-        board[itemRow-1][itemColumn-1] = "option"
-        board[itemRow-1][itemColumn+1] = "option"  
-      //left side blank   
-      } else if (board[itemRow-1][itemColumn-1] === "nothing") {
-        board[itemRow-1][itemColumn-1] = "option"
+    if (board[r][c] === "green" && noOption() === 0) {
+      if (board[r-1][c-1] === "red" && board[r-2][c-2] === "nothing") {
+        //two jumps; both to the left
+        if (board[r-3][c-3] === "red" && board[r-4][c-4] === "nothing") {
+          board[r-4][c-4] = "option"
+        //two jumps; left followed by right
+        } else if (board[r-3][c-1] === "red" && board[r-4][c] === "nothing") {
+          board[r-4][c] = "option"
+        //both sides red
+        } else if (board[r-1][c+1] === "red" && board[r-2][c+2] === "nothing") {
+          board[r-2][c-2] = "option"
+          board[r-2][c+2] = "option"
+        //left side red
+        } else {
+          board[r-2][c-2] = "option"
+        }
+      } else if (board[r-1][c+1] === "red" && board[r-2][c+2] === "nothing") {
+        //two jumps; both to the right
+        if (board[r-3][c+3] === "red" && board[r-4][c+4] === "nothing") {
+          board[r-4][c+4] = "option"
+        //two jumps; right followed by left
+        } else if (board[r-3][c+1] === "red" && board[r-4][c] === "nothing") {
+          board[r-4][c] = "option"
+        //right side red
+        } else {
+          board[r-2][c+2] = "option"
+        }
+      } else if (board[r-1][c-1] === "nothing") {
+        //both sides blank
+        if (board[r-1][c+1] === "nothing") {
+          board[r-1][c-1] = "option"
+          board[r-1][c+1] = "option"
+        //left side blank
+        } else {
+          board[r-1][c-1] = "option"
+        }
       //right side blank
-      } else if (board[itemRow-1][itemColumn+1] === "nothing") {
-        board[itemRow-1][itemColumn+1] = "option"
-      } 
+      } else if (board[r-1][c+1] === "nothing") {
+        board[r-1][c+1] = "option"
+      }
       //selected green checker turns to optionGreen
-      board[itemRow][itemColumn] = "optionGreen"
+      board[r][c] = "optionGreen"
 
-    // selecting the option
-    } else if (board[itemRow][itemColumn] === "option") {
+    //selecting the option
+    } else if (board[r][c] === "option") {
+      //two jumps; both to the left
+      if (board[r+4][c+4] === "optionGreen") {
+        //red pieces are removed
+        board[r+1][c+1] = "nothing"
+        board[r+3][c+3] = "nothing"
+      //two jumps; both to the right
+      } else if (board[r+4][c-4] === "optionGreen") {
+        //red pieces are removed
+        board[r+1][c-1] = "nothing"
+        board[r+3][c-3] = "nothing"
+      //two jumps; left followed by right
+      } else if (board[r+4][c] === "optionGreen" && board[r+1][c-1] === "red" && board[r+3][c-1] === "red") {
+        //red pieces are removed
+        board[r+1][c-1] = "nothing"
+        board[r+3][c-1] = "nothing"
+      //two jumps; right followed by left
+      } else if (board[r+4][c] === "optionGreen" && board[r+1][c+1] === "red" && board[r+3][c+1] === "red") {
+        //red pieces are removed
+        board[r+1][c+1] = "nothing"
+        board[r+3][c+1] = "nothing"
       //left being red and was selected
-      if (board[itemRow+2][itemColumn+2] === "optionGreen") {
+      } else if (board[r+2][c+2] === "optionGreen") {
         //red piece is removed
-        board[itemRow+1][itemColumn+1] = "nothing"
+        board[r+1][c+1] = "nothing"
       //right being red and was selected
-      } else if (board[itemRow+2][itemColumn-2] === "optionGreen") {
+      } else if (board[r+2][c-2] === "optionGreen") {
         //red piece is removed
-        board[itemRow+1][itemColumn-1] = "nothing"
+        board[r+1][c-1] = "nothing"
       //blank option on the left and was selected
-      } else if (board[itemRow+1][itemColumn+1] === "optionGreen") {
+      } else if (board[r+1][c+1] === "optionGreen") {
       //blank option on the right and was selected
       }
       clear()
-      board[itemRow][itemColumn] = "green"
+      board[r][c] = "green"
       turn = "Red"
     
     //deselecting the piece to choose another
-    } else if (board[itemRow][itemColumn] === "optionGreen") {
-      board[itemRow][itemColumn] = "green"
+    } else if (board[r][c] === "optionGreen") {
+      board[r][c] = "green"
       clear()
     }
   } 
@@ -178,52 +220,89 @@ function handleClick (e) {
   else if (turn === "Red") {
 
     //letting the options appear
-    if (board[itemRow][itemColumn] === "red" && noOption() === 0) {
-      //both sides green
-      if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+2][itemColumn-2] === "nothing" && board[itemRow+1][itemColumn+1] === "green" && board[itemRow+2][itemColumn+2] === "nothing") {
-        board[itemRow+2][itemColumn-2] = "option"
-        board[itemRow+2][itemColumn+2] = "option"
-      //left side green
-      } else if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+2][itemColumn-2] === "nothing") {
-        board[itemRow+2][itemColumn-2] = "option"
-      //right side green
-      } else if (board[itemRow+1][itemColumn+1] === "green" && board[itemRow+2][itemColumn+2] === "nothing") {
-        board[itemRow+2][itemColumn+2] = "option"
-      //both sides blank
-      } else if (board[itemRow+1][itemColumn-1] === "nothing" && board[itemRow+1][itemColumn+1] === "nothing") {
-        board[itemRow+1][itemColumn-1] = "option"
-        board[itemRow+1][itemColumn+1] = "option"  
-      //left side blank   
-      } else if (board[itemRow+1][itemColumn-1] === "nothing") {
-        board[itemRow+1][itemColumn-1] = "option"
+    if (board[r][c] === "red" && noOption() === 0) {
+      if (board[r+1][c-1] === "green" && board[r+2][c-2] === "nothing") {
+        //two jumps; both to the left
+        if (board[r+3][c-3] === "green" &&  board[r+4][c-4] === "nothing") {
+          board[r+4][c-4] = "option"
+        //two jumps; left followed by right
+        } else if (board[r+3][c-1] === "green" && board[r+4][c] === "nothing") {
+          board[r+4][c] = "option"
+        //both sides green
+        } else if (board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing") {
+          board[r+2][c-2] = "option"
+          board[r+2][c+2] = "option"
+        //left side green
+        } else {
+          board[r+2][c-2] = "option"
+        }
+      } else if (board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing") {
+        //two jumps; both to the right
+        if (board[r+3][c+3] === "green" && board[r+4][c+4] === "nothing") {
+          board[r+4][c+4] = "option"
+        //two jumps; right followed by left
+        } else if (board[r+3][c+1] === "green" && board[r+4][c] === "nothing") {
+          board[r+4][c] = "option"
+        //right side green
+        } else {
+          board[r+2][c+2] = "option"
+        }
+      } else if (board[r+1][c-1] === "nothing") {
+        //both sides blank
+        if (board[r+1][c+1] === "nothing") {
+          board[r+1][c-1] = "option"
+          board[r+1][c+1] = "option"
+        //left side blank
+        } else {
+          board[r+1][c-1] = "option"
+        }
       //right side blank
-      } else if (board[itemRow+1][itemColumn+1] === "nothing") {
-        board[itemRow+1][itemColumn+1] = "option"
-      } 
-      //selected green checker turns to optionGreen
-      board[itemRow][itemColumn] = "optionRed"
-
+      } else if (board[r+1][c+1] === "nothing") {
+        board[r+1][c+1] = "option"
+      }
+      //selected red checker turns to optionRed
+      board[r][c] = "optionRed"
     // selecting the option
-    } else if (board[itemRow][itemColumn] === "option") {
+    } else if (board[r][c] === "option") {
+      //two jumps; both to the left
+      if (board[r-4][c+4] === "optionRed") {
+        //red pieces are removed
+        board[r-1][c+1] = "nothing"
+        board[r-3][c+3] = "nothing"
+      //two jumps; both to the right
+      } else if (board[r-4][c-4] === "optionRed") {
+        //red pieces are removed
+        board[r-1][c-1] = "nothing"
+        board[r-3][c-3] = "nothing"
+      //two jumps; left followed by right
+      } else if (board[r-4][c] === "optionRed" && board[r-1][c-1] === "green" && board[r-3][c-1] === "green") {
+        //red pieces are removed
+        board[r-1][c-1] = "nothing"
+        board[r-3][c-1] = "nothing"
+      //two jumps; right followed by left
+      } else if (board[r-4][c] === "optionRed" && board[r-1][c+1] === "green" && board[r-3][c+1] === "green") {
+        //red pieces are removed
+        board[r-1][c+1] = "nothing"
+        board[r-3][c+1] = "nothing"
       //left being green and was selected
-      if (board[itemRow-2][itemColumn+2] === "optionRed") {
+      } else if (board[r-2][c+2] === "optionRed") {
         //green piece is removed
-        board[itemRow-1][itemColumn+1] = "nothing"
+        board[r-1][c+1] = "nothing"
       //right being green and was selected
-      } else if (board[itemRow-2][itemColumn-2] === "optionRed") {
+      } else if (board[r-2][c-2] === "optionRed") {
         //green piece is removed
-        board[itemRow-1][itemColumn-1] = "nothing"
+        board[r-1][c-1] = "nothing"
       //blank option on the left and was selected
-      } else if (board[itemRow-1][itemColumn+1] === "optionRed") {
+      } else if (board[r-1][c+1] === "optionRed") {
       //blank option on the right and was selected
       }
       clear()
-      board[itemRow][itemColumn] = "red"
+      board[r][c] = "red"
       turn = "Green"
 
     //deselecting the piece to choose another
-    } else if (board[itemRow][itemColumn] === "optionRed") {
-      board[itemRow][itemColumn] = "red"
+    } else if (board[r][c] === "optionRed") {
+      board[r][c] = "red"
       clear()
     }
   }
@@ -259,5 +338,76 @@ function render () {
 initialise()
 
 
+// //two jumps; both to the left
+// if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing" && board[itemRow-3][itemColumn-3] === "red" && board[itemRow-4][itemColumn-4] === "nothing") {
+//   board[itemRow-4][itemColumn-4] = "option"
+// //two jumps; both to the right
+// } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing" && board[itemRow-3][itemColumn+3] === "red" && board[itemRow-4][itemColumn+4] === "nothing") {
+//   board[itemRow-4][itemColumn+4] = "option"
+// //two jumps; left followed by right
+// } else if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing" && board[itemRow-3][itemColumn-1] === "red" && board[itemRow-4][itemColumn] === "nothing") {
+//   board[itemRow-4][itemColumn] = "option"
+// //two jumps; right followed up left
+// } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing" && board[itemRow-3][itemColumn+1] === "red" && board[itemRow-4][itemColumn] === "nothing") {
+//   board[itemRow-4][itemColumn] = "option"
+// //both sides red
+// } else if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing" && board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
+//   board[itemRow-2][itemColumn-2] = "option"
+//   board[itemRow-2][itemColumn+2] = "option"
+// //left side red
+// } else if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing") {
+//   board[itemRow-2][itemColumn-2] = "option"
+// //right side red
+// } else if (board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
+//   board[itemRow-2][itemColumn+2] = "option"
+// //both sides blank
+// } else if (board[itemRow-1][itemColumn-1] === "nothing" && board[itemRow-1][itemColumn+1] === "nothing") {
+//   board[itemRow-1][itemColumn-1] = "option"
+//   board[itemRow-1][itemColumn+1] = "option"  
+// //left side blank   
+// } else if (board[itemRow-1][itemColumn-1] === "nothing") {
+//   board[itemRow-1][itemColumn-1] = "option"
+// //right side blank
+// } else if (board[itemRow-1][itemColumn+1] === "nothing") {
+//   board[itemRow-1][itemColumn+1] = "option"
+// } 
+// //selected green checker turns to optionGreen
+// board[itemRow][itemColumn] = "optionGreen"
 
 
+
+// //two jumps; both to the left
+// if (board[r+1][c-1] === "green" && board[r+2][c-2] === "nothing" && board[r+3][c-3] === "green" && board[r+4][c-4] === "nothing") {
+//   board[r+4][c-4] = "option"
+// //two jumps; both to the right
+// } else if (board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing" && board[r+3][c+3] === "green" && board[r+4][c+4] === "nothing") {
+//   board[r+4][c+4] = "option"
+// //two jumps; left followed by right
+// } else if (board[r+1][c-1] === "green" && board[r+2][c-2] === "nothing" && board[r+3][c-1] === "green" && board[r+4][c] === "nothing") {
+//   board[r+4][c] = "option"
+// //two jumps; right followed up left
+// } else if (board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing" && board[r+3][c+1] === "red" && board[r+4][c] === "nothing") {
+//   board[r+4][c] = "option"
+// //both sides green
+// } else if (board[r+1][c-1] === "green" && board[r+2][c-2] === "nothing" && board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing") {
+//   board[r+2][c-2] = "option"
+//   board[r+2][c+2] = "option"
+// //left side green
+// } else if (board[r+1][c-1] === "green" && board[r+2][c-2] === "nothing") {
+//   board[r+2][c-2] = "option"
+// //right side green
+// } else if (board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing") {
+//   board[r+2][c+2] = "option"
+// //both sides blank
+// } else if (board[r+1][c-1] === "nothing" && board[r+1][c+1] === "nothing") {
+//   board[r+1][c-1] = "option"
+//   board[r+1][c+1] = "option"  
+// //left side blank   
+// } else if (board[r+1][c-1] === "nothing") {
+//   board[r+1][c-1] = "option"
+// //right side blank
+// } else if (board[r+1][c+1] === "nothing") {
+//   board[r+1][c+1] = "option"
+// } 
+// //selected green checker turns to optionGreen
+// board[r][c] = "optionRed"
