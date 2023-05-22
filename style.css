@@ -15,12 +15,12 @@ body {
   flex-wrap: wrap;
 }
 
-.squareRow {
+/* .squareRow {
   width: 400px;
   height: 50px;
   background-color: white;
   border: solid 1px black;
-}
+} */
 
 .whiteSquare {
   width: 50px;
