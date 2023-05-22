@@ -1,3 +1,4 @@
+//some variables
 let board = [];
 let turn = "";
 let greenCount = 0
@@ -10,6 +11,7 @@ const playerTurn = document.querySelector("#playerTurn");
 const boardSection = document.querySelector("#board")
 const winner = document.querySelector("#winner")
 
+//initialise
 function initialise () {
   board = [
     [],
@@ -85,6 +87,19 @@ const clear = function () {
     })
   })
 }
+//function to make sure there is no existing option open
+const noOption = function () {
+  let count = 0
+  board.forEach(function (boardRow){
+    boardRow.forEach(function(piece) {
+      if (piece === "option") {
+        count ++
+      }
+    })
+  })
+  return count
+} 
+
 //function to count pieces
 const countPieces = function () {
   redCount = 0
@@ -108,8 +123,9 @@ function handleClick (e) {
 
   //movements and options
   if (turn === "Green") {
+
     //letting the options appear
-    if (board[itemRow][itemColumn] === "green") {
+    if (board[itemRow][itemColumn] === "green" && noOption() === 0) {
       //both sides red
       if (board[itemRow-1][itemColumn-1] === "red" && board[itemRow-2][itemColumn-2] === "nothing" && board[itemRow-1][itemColumn+1] === "red" && board[itemRow-2][itemColumn+2] === "nothing") {
         board[itemRow-2][itemColumn-2] = "option"
@@ -140,21 +156,19 @@ function handleClick (e) {
       if (board[itemRow+2][itemColumn+2] === "optionGreen") {
         //red piece is removed
         board[itemRow+1][itemColumn+1] = "nothing"
-        clear()
       //right being red and was selected
       } else if (board[itemRow+2][itemColumn-2] === "optionGreen") {
         //red piece is removed
         board[itemRow+1][itemColumn-1] = "nothing"
-        clear()
       //blank option on the left and was selected
       } else if (board[itemRow+1][itemColumn+1] === "optionGreen") {
-        clear()
       //blank option on the right and was selected
-      } else if (board[itemRow+1][itemColumn-1] === "optionGreen") {
-        clear()
       }
+      clear()
       board[itemRow][itemColumn] = "green"
       turn = "Red"
+    
+    //deselecting the piece to choose another
     } else if (board[itemRow][itemColumn] === "optionGreen") {
       board[itemRow][itemColumn] = "green"
       clear()
@@ -162,8 +176,10 @@ function handleClick (e) {
   } 
   
   else if (turn === "Red") {
+
     //letting the options appear
-    if (board[itemRow][itemColumn] === "red") {
+    if (board[itemRow][itemColumn] === "red" && noOption() === 0) {
+      //both sides green
       if (board[itemRow+1][itemColumn-1] === "green" && board[itemRow+2][itemColumn-2] === "nothing" && board[itemRow+1][itemColumn+1] === "green" && board[itemRow+2][itemColumn+2] === "nothing") {
         board[itemRow+2][itemColumn-2] = "option"
         board[itemRow+2][itemColumn+2] = "option"
@@ -193,21 +209,19 @@ function handleClick (e) {
       if (board[itemRow-2][itemColumn+2] === "optionRed") {
         //green piece is removed
         board[itemRow-1][itemColumn+1] = "nothing"
-        clear()
       //right being green and was selected
       } else if (board[itemRow-2][itemColumn-2] === "optionRed") {
         //green piece is removed
         board[itemRow-1][itemColumn-1] = "nothing"
-        clear()
       //blank option on the left and was selected
       } else if (board[itemRow-1][itemColumn+1] === "optionRed") {
-        clear()
       //blank option on the right and was selected
-      } else if (board[itemRow-1][itemColumn-1] === "optionRed") {
-        clear()
       }
+      clear()
       board[itemRow][itemColumn] = "red"
       turn = "Green"
+
+    //deselecting the piece to choose another
     } else if (board[itemRow][itemColumn] === "optionRed") {
       board[itemRow][itemColumn] = "red"
       clear()
