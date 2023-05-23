@@ -1,6 +1,6 @@
 //some variables
 let board = [];
-let turn = "";
+let turn = 1;
 let greenCount = 0
 let redCount = 0
 
@@ -18,20 +18,20 @@ function initialise () {
     [],
     [],
     [],
-    ["red",null,"red",null,"red",null,"red",null],
-    [null,"red",null,"red",null,"red",null,"red"],
-    ["red",null,"red",null,"red",null,"red",null],
-    [null,"nothing",null,"nothing",null,"nothing",null,"nothing"],
-    ["nothing",null,"nothing",null,"nothing",null,"nothing",null],
-    [null,"green",null,"green",null,"green",null,"green"],
-    ["green",null,"green",null,"green",null,"green",null],
-    [null,"green",null,"green",null,"green",null,"green"],
+    [-1,null,-1,null,-1,null,-1,null],
+    [null,-1,null,-1,null,-1,null,-1],
+    [-1,null,-1,null,-1,null,-1,null],
+    [null,0,null,0,null,0,null,0],
+    [0,null,0,null,0,null,0,null],
+    [null,1,null,1,null,1,null,1],
+    [1,null,1,null,1,null,1,null],
+    [null,1,null,1,null,1,null,1],
     [],
     [],
     [],
     [],
   ];
-  turn = "Green";
+  turn = 1;
   render()
 }
 
@@ -60,17 +60,17 @@ function renderBoard () {
         checkerPieces.setAttribute("row", rowIndex)
         checkerPieces.setAttribute("column", columnIndex)
         //this is to show how the board on the screen will change based on the values in the board array in javascript
-        if (board[rowIndex][columnIndex] === "red") {
+        if (board[rowIndex][columnIndex] === -1) {
           checkerPieces.classList.add("redCheckersPiece")
-        } else if (board[rowIndex][columnIndex] === "green") {
+        } else if (board[rowIndex][columnIndex] === 1) {
           checkerPieces.classList.add("greenCheckersPiece")
-        } else if (board[rowIndex][columnIndex] === "nothing") {
+        } else if (board[rowIndex][columnIndex] === 0) {
           checkerPieces.classList.add("noCheckersPiece")
-        } else if (board[rowIndex][columnIndex] === "option") {
+        } else if (board[rowIndex][columnIndex] === 3 || board[rowIndex][columnIndex] === -3) {
           checkerPieces.classList.add("optionCheckersPiece")
-        } else if (board[rowIndex][columnIndex] === "optionRed") {
+        } else if (board[rowIndex][columnIndex] === -2) {
           checkerPieces.classList.add("optionRedCheckersPiece")
-        } else if (board[rowIndex][columnIndex] === "optionGreen") {
+        } else if (board[rowIndex][columnIndex] === 2) {
           checkerPieces.classList.add("optionGreenCheckersPiece")
         } 
       })
@@ -85,8 +85,8 @@ const clear = function () {
   //clear options
   board.forEach(function (boardRow, rowIndex){
     boardRow.forEach(function(piece, columnIndex) {
-      if (piece === "option" || piece === "optionGreen" || piece === "optionRed") {
-        board[rowIndex][columnIndex] = "nothing"
+      if (piece === 3 || piece === 2 || piece === -2 || piece === -3) {
+        board[rowIndex][columnIndex] = 0
       }
     })
   })
@@ -96,7 +96,7 @@ const noOption = function () {
   let count = 0
   board.forEach(function (boardRow){
     boardRow.forEach(function(piece) {
-      if (piece === "option") {
+      if (piece === 3 || piece === -3) {
         count ++
       }
     })
@@ -110,9 +110,9 @@ const countPieces = function () {
   greenCount = 0
   board.forEach(function (boardRow){
     boardRow.forEach(function(piece) {
-      if (piece === "green" || piece === "optionGreen") {
+      if (piece === 1 || piece === 2) {
         greenCount ++
-      } else if (piece === "red" || piece === "optionRed") {
+      } else if (piece === -1 || piece === -2) {
         redCount ++
       }
     })
@@ -126,183 +126,178 @@ function handleClick (e) {
   const c = parseInt(itemClicked.getAttribute("column"))
 
   //movements and options
-  if (turn === "Green") {
+  if (turn === 1) {
 
     //letting the options appear
-    if (board[r][c] === "green" && noOption() === 0) {
-      if (board[r-1][c-1] === "red" && board[r-2][c-2] === "nothing") {
+    if (board[r][c] === 1 && noOption() === 0) {
+      if (board[r-1][c-1] === -1 && board[r-2][c-2] === 0) {
         //two jumps; both to the left
-        if (board[r-3][c-3] === "red" && board[r-4][c-4] === "nothing") {
-          board[r-4][c-4] = "option"
+        if (board[r-3][c-3] === -1 && board[r-4][c-4] === 0) {
+          board[r-4][c-4] = 3
         //two jumps; left followed by right
-        } else if (board[r-3][c-1] === "red" && board[r-4][c] === "nothing") {
-          board[r-4][c] = "option"
+        } else if (board[r-3][c-1] === -1 && board[r-4][c] === 0) {
+          board[r-4][c] = 3
         //both sides red
-        } else if (board[r-1][c+1] === "red" && board[r-2][c+2] === "nothing") {
-          board[r-2][c-2] = "option"
-          board[r-2][c+2] = "option"
+        } else if (board[r-1][c+1] === -1 && board[r-2][c+2] === 0) {
+          board[r-2][c-2] = 3
+          board[r-2][c+2] = 3
         //left side red
         } else {
-          board[r-2][c-2] = "option"
+          board[r-2][c-2] = 3
         }
-      } else if (board[r-1][c+1] === "red" && board[r-2][c+2] === "nothing") {
+      } else if (board[r-1][c+1] === -1 && board[r-2][c+2] === 0) {
         //two jumps; both to the right
-        if (board[r-3][c+3] === "red" && board[r-4][c+4] === "nothing") {
-          board[r-4][c+4] = "option"
+        if (board[r-3][c+3] === -1 && board[r-4][c+4] === 0) {
+          board[r-4][c+4] = 3
         //two jumps; right followed by left
-        } else if (board[r-3][c+1] === "red" && board[r-4][c] === "nothing") {
-          board[r-4][c] = "option"
+        } else if (board[r-3][c+1] === -1 && board[r-4][c] === 0) {
+          board[r-4][c] = 3
         //right side red
         } else {
-          board[r-2][c+2] = "option"
+          board[r-2][c+2] = 3
         }
-      } else if (board[r-1][c-1] === "nothing") {
+      } else if (board[r-1][c-1] === 0) {
         //both sides blank
-        if (board[r-1][c+1] === "nothing") {
-          board[r-1][c-1] = "option"
-          board[r-1][c+1] = "option"
+        if (board[r-1][c+1] === 0) {
+          board[r-1][c-1] = 3
+          board[r-1][c+1] = 3
         //left side blank
         } else {
-          board[r-1][c-1] = "option"
+          board[r-1][c-1] = 3
         }
       //right side blank
-      } else if (board[r-1][c+1] === "nothing") {
-        board[r-1][c+1] = "option"
+      } else if (board[r-1][c+1] === 0) {
+        board[r-1][c+1] = 3
       }
       //selected green checker turns to optionGreen
-      board[r][c] = "optionGreen"
+      board[r][c] = 2
 
     //selecting the option
-    } else if (board[r][c] === "option") {
+    } else if (board[r][c] === 3) {
       //two jumps; both to the left
-      if (board[r+4][c+4] === "optionGreen") {
+      if (board[r+4][c+4] === 2) {
         //red pieces are removed
-        board[r+1][c+1] = "nothing"
-        board[r+3][c+3] = "nothing"
+        board[r+1][c+1] = 0
+        board[r+3][c+3] = 0
       //two jumps; both to the right
-      } else if (board[r+4][c-4] === "optionGreen") {
+      } else if (board[r+4][c-4] === 2) {
         //red pieces are removed
-        board[r+1][c-1] = "nothing"
-        board[r+3][c-3] = "nothing"
+        board[r+1][c-1] = 0
+        board[r+3][c-3] = 0
       //two jumps; left followed by right
-      } else if (board[r+4][c] === "optionGreen" && board[r+1][c-1] === "red" && board[r+3][c-1] === "red") {
+      } else if (board[r+4][c] === 2 && board[r+1][c-1] === -1 && board[r+3][c-1] === -1) {
         //red pieces are removed
-        board[r+1][c-1] = "nothing"
-        board[r+3][c-1] = "nothing"
+        board[r+1][c-1] = 0
+        board[r+3][c-1] = 0
       //two jumps; right followed by left
-      } else if (board[r+4][c] === "optionGreen" && board[r+1][c+1] === "red" && board[r+3][c+1] === "red") {
+      } else if (board[r+4][c] === 2 && board[r+1][c+1] === -1 && board[r+3][c+1] === -1) {
         //red pieces are removed
-        board[r+1][c+1] = "nothing"
-        board[r+3][c+1] = "nothing"
+        board[r+1][c+1] = 0
+        board[r+3][c+1] = 0
       //left being red and was selected
-      } else if (board[r+2][c+2] === "optionGreen") {
+      } else if (board[r+2][c+2] === 2) {
         //red piece is removed
-        board[r+1][c+1] = "nothing"
+        board[r+1][c+1] = 0
       //right being red and was selected
-      } else if (board[r+2][c-2] === "optionGreen") {
+      } else if (board[r+2][c-2] === 2) {
         //red piece is removed
-        board[r+1][c-1] = "nothing"
-      //blank option on the left and was selected
-      } else if (board[r+1][c+1] === "optionGreen") {
-      //blank option on the right and was selected
-      }
+        board[r+1][c-1] = 0
+      } 
       clear()
-      board[r][c] = "green"
-      turn = "Red"
+      board[r][c] = 1
+      turn = -1
     
     //deselecting the piece to choose another
-    } else if (board[r][c] === "optionGreen") {
-      board[r][c] = "green"
+    } else if (board[r][c] === 2) {
+      board[r][c] = 1
       clear()
     }
   } 
   
-  else if (turn === "Red") {
+  else if (turn === -1) {
 
     //letting the options appear
-    if (board[r][c] === "red" && noOption() === 0) {
-      if (board[r+1][c-1] === "green" && board[r+2][c-2] === "nothing") {
+    if (board[r][c] === -1 && noOption() === 0) {
+      if (board[r+1][c-1] === 1 && board[r+2][c-2] === 0) {
         //two jumps; both to the left
-        if (board[r+3][c-3] === "green" &&  board[r+4][c-4] === "nothing") {
-          board[r+4][c-4] = "option"
+        if (board[r+3][c-3] === 1 &&  board[r+4][c-4] === 0) {
+          board[r+4][c-4] = -3
         //two jumps; left followed by right
-        } else if (board[r+3][c-1] === "green" && board[r+4][c] === "nothing") {
-          board[r+4][c] = "option"
+        } else if (board[r+3][c-1] === 1 && board[r+4][c] === 0) {
+          board[r+4][c] = -3
         //both sides green
-        } else if (board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing") {
-          board[r+2][c-2] = "option"
-          board[r+2][c+2] = "option"
+        } else if (board[r+1][c+1] === 1 && board[r+2][c+2] === 0) {
+          board[r+2][c-2] = -3
+          board[r+2][c+2] = -3
         //left side green
         } else {
-          board[r+2][c-2] = "option"
+          board[r+2][c-2] = -3
         }
-      } else if (board[r+1][c+1] === "green" && board[r+2][c+2] === "nothing") {
+      } else if (board[r+1][c+1] === 1 && board[r+2][c+2] === 0) {
         //two jumps; both to the right
-        if (board[r+3][c+3] === "green" && board[r+4][c+4] === "nothing") {
-          board[r+4][c+4] = "option"
+        if (board[r+3][c+3] === 1 && board[r+4][c+4] === 0) {
+          board[r+4][c+4] = -3
         //two jumps; right followed by left
-        } else if (board[r+3][c+1] === "green" && board[r+4][c] === "nothing") {
-          board[r+4][c] = "option"
+        } else if (board[r+3][c+1] === 1 && board[r+4][c] === 0) {
+          board[r+4][c] = -3
         //right side green
         } else {
-          board[r+2][c+2] = "option"
+          board[r+2][c+2] = -3
         }
-      } else if (board[r+1][c-1] === "nothing") {
+      } else if (board[r+1][c-1] === 0) {
         //both sides blank
-        if (board[r+1][c+1] === "nothing") {
-          board[r+1][c-1] = "option"
-          board[r+1][c+1] = "option"
+        if (board[r+1][c+1] === 0) {
+          board[r+1][c-1] = -3
+          board[r+1][c+1] = -3
         //left side blank
         } else {
-          board[r+1][c-1] = "option"
+          board[r+1][c-1] = -3
         }
       //right side blank
-      } else if (board[r+1][c+1] === "nothing") {
-        board[r+1][c+1] = "option"
+      } else if (board[r+1][c+1] === 0) {
+        board[r+1][c+1] = -3
       }
       //selected red checker turns to optionRed
-      board[r][c] = "optionRed"
+      board[r][c] = -2
+
     // selecting the option
-    } else if (board[r][c] === "option") {
+    } else if (board[r][c] === -3) {
       //two jumps; both to the left
-      if (board[r-4][c+4] === "optionRed") {
+      if (board[r-4][c+4] === -2) {
         //red pieces are removed
-        board[r-1][c+1] = "nothing"
-        board[r-3][c+3] = "nothing"
+        board[r-1][c+1] = 0
+        board[r-3][c+3] = 0
       //two jumps; both to the right
-      } else if (board[r-4][c-4] === "optionRed") {
+      } else if (board[r-4][c-4] === -2) {
         //red pieces are removed
-        board[r-1][c-1] = "nothing"
-        board[r-3][c-3] = "nothing"
+        board[r-1][c-1] = 0
+        board[r-3][c-3] = 0
       //two jumps; left followed by right
-      } else if (board[r-4][c] === "optionRed" && board[r-1][c-1] === "green" && board[r-3][c-1] === "green") {
+      } else if (board[r-4][c] === -2 && board[r-1][c-1] === 1 && board[r-3][c-1] === 1) {
         //red pieces are removed
-        board[r-1][c-1] = "nothing"
-        board[r-3][c-1] = "nothing"
+        board[r-1][c-1] = 0
+        board[r-3][c-1] = 0
       //two jumps; right followed by left
-      } else if (board[r-4][c] === "optionRed" && board[r-1][c+1] === "green" && board[r-3][c+1] === "green") {
+      } else if (board[r-4][c] === -2 && board[r-1][c+1] === 1 && board[r-3][c+1] === 1) {
         //red pieces are removed
-        board[r-1][c+1] = "nothing"
-        board[r-3][c+1] = "nothing"
+        board[r-1][c+1] = 0
+        board[r-3][c+1] = 0
       //left being green and was selected
-      } else if (board[r-2][c+2] === "optionRed") {
+      } else if (board[r-2][c+2] === -2) {
         //green piece is removed
-        board[r-1][c+1] = "nothing"
+        board[r-1][c+1] = 0
       //right being green and was selected
-      } else if (board[r-2][c-2] === "optionRed") {
+      } else if (board[r-2][c-2] === -2) {
         //green piece is removed
-        board[r-1][c-1] = "nothing"
-      //blank option on the left and was selected
-      } else if (board[r-1][c+1] === "optionRed") {
-      //blank option on the right and was selected
+        board[r-1][c-1] = 0
       }
       clear()
-      board[r][c] = "red"
-      turn = "Green"
+      board[r][c] = -1
+      turn = 1
 
     //deselecting the piece to choose another
-    } else if (board[r][c] === "optionRed") {
-      board[r][c] = "red"
+    } else if (board[r][c] === -2) {
+      board[r][c] = -1
       clear()
     }
   }
@@ -315,7 +310,11 @@ function renderRemaining () {
 }
 
 function renderTurn () {
-  playerTurn.innerText = `It is currently Player ${turn}'s turn`
+  if (turn === 1) {
+    playerTurn.innerText = "It is currently Player Green's turn"
+  } else {
+    playerTurn.innerText = "It is currently Player Red's turn"
+  }
 }
 
 function renderWinner () {
