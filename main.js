@@ -95,6 +95,27 @@ const clear = function () {
   })
 }
 
+//function to use when existing option is not closed
+const antiOtherOption = function () {
+  board.forEach(function (boardRow, rowIndex){
+    boardRow.forEach(function(piece, columnIndex) {
+      if (turn === 1) {
+        if (piece === 3) {
+          board[rowIndex][columnIndex] = 0
+        } else if (piece === 2) {
+          board[rowIndex][columnIndex] = 1
+        }
+      } else if (turn === -1) {
+        if (piece === -3) {
+          board[rowIndex][columnIndex] = 0
+        } else if (piece === -2) {
+          board[rowIndex][columnIndex] = -1
+        }
+      }
+    })
+  })
+}
+
 //function to count pieces
 const countPieces = function () {
   redCount = 0
@@ -131,7 +152,7 @@ function handleClick (e) {
   
     //letting the options appear
     if (board[r][c] === 1) {
-      console.log(r)
+      antiOtherOption()
       if (board[r-1][c-1] === -1 && board[r-2][c-2] === 0) {
         //two jumps; both to the left
         if (board[r-3][c-3] === -1 && board[r-4][c-4] === 0) {
@@ -170,6 +191,7 @@ function handleClick (e) {
       //right side blank
       } else if (board[r-1][c+1] === 0) {
         board[r-1][c+1] = 3
+      //you did not close the other option
       }
       //selected green checker turns to optionGreen
       board[r][c] = 2
@@ -222,6 +244,7 @@ function handleClick (e) {
   else if (turn === -1) {
 
     //letting the options appear
+    antiOtherOption()
     if (board[r][c] === -1) {
       if (board[r+1][c-1] === 1 && board[r+2][c-2] === 0) {
         //two jumps; both to the left
