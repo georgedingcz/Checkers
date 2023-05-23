@@ -244,8 +244,8 @@ function handleClick (e) {
   else if (turn === -1) {
 
     //letting the options appear
-    antiOtherOption()
     if (board[r][c] === -1) {
+      antiOtherOption()
       if (board[r+1][c-1] === 1 && board[r+2][c-2] === 0) {
         //two jumps; both to the left
         if (board[r+3][c-3] === 1 &&  board[r+4][c-4] === 0) {
