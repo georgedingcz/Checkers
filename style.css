@@ -26,6 +26,37 @@ body {
   animation-timing-function: linear;
 }
 
+#test {
+  display: flex;
+}
+
+h1 {
+  font-size: 50px;
+  font-family:cursive;
+}
+
+.playerGreen {
+  font-size: 25px;
+  margin: auto;
+  width: 200px;
+  height: 100px;
+}
+
+.playerRed {
+  font-size: 25px;
+  margin: auto;
+  width: 200px;
+  height: 100px;
+}
+
+#playerTurn {
+  font-size: 25px;
+}
+
+#winner {
+  font-size: 25px;
+}
+
 #board {
   width: 400px;
   height: 400px;
@@ -61,14 +92,16 @@ body {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-color: red;
+  background-image: url(https://previews.123rf.com/images/victor85/victor851711/victor85171100186/90388322-fire-flame-circle-icon-with-long-shadow-flat-design-style-fire-flame-simple-silhouette-modern.jpg);
+  background-size: cover;
 }
 
 .greenCheckersPiece {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-color: green;
+  background-image: url(https://media.istockphoto.com/id/1264039988/vector/leaves-separated-symbol-icon-sign.jpg?s=612x612&w=0&k=20&c=zAHxPyOWM6QR5Ucy5A1ArXaAdA32TWdmW5VI2MH08bU=);
+  background-size: cover;
 }
 
 .noCheckersPiece {
@@ -80,27 +113,29 @@ body {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-color: grey;
+  background-image: url(https://www.shutterstock.com/image-vector/modern-black-white-simple-question-260nw-1892291464.jpg);
+  background-size: cover;
 }
 
 .optionRedCheckersPiece {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-color: pink;
+  background-image: url(https://previews.123rf.com/images/victor85/victor851711/victor85171100186/90388322-fire-flame-circle-icon-with-long-shadow-flat-design-style-fire-flame-simple-silhouette-modern.jpg);
+  background-size: cover;
+  opacity: 0.3;
 }
 
 .optionGreenCheckersPiece {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-color: lightgreen;
+  background-image: url(https://media.istockphoto.com/id/1264039988/vector/leaves-separated-symbol-icon-sign.jpg?s=612x612&w=0&k=20&c=zAHxPyOWM6QR5Ucy5A1ArXaAdA32TWdmW5VI2MH08bU=);
+  background-size: cover;
+  opacity: 0.3;
 }
 
-h1 {
-  font-size: 50px;
-  font-family:cursive;
-}
+
 
 
 /* Cool infinite background scrolling animation.
@@ -151,7 +186,7 @@ h1 {
   }
 }
 
-
+/* taken from https://getcssscan.com/css-buttons-examples */
 .button-17 {
   align-items: center;
   appearance: none;

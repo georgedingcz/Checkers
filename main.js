@@ -35,6 +35,7 @@ function initialise () {
   turn = 1;
   render()
   winner.innerText = "There is no winner yet"
+  playerTurn.hidden = false
 }
 
 function clear () {
@@ -85,10 +86,12 @@ function countPieces () {
 
 function greenReached () {
   winner.innerText = "Player Green has won"
+  playerTurn.hidden = true
 }
 
 function redReached () {
   winner.innerText = "Player Red has won"
+  playerTurn.hidden = true
 }
 
 
@@ -140,8 +143,10 @@ function renderRemaining () {
   playerGreenPieces.innerText = `Player Green has ${greenCount} pieces remaining`
   if (greenCount === 0) {
     winner.innerText = "Player Red has won"
+    playerTurn.hidden = true
   } else if (redCount === 0) {
     winner.innerText = "Player Green has won"
+    playerTurn.hidden = true
   }
 }
 
@@ -254,7 +259,6 @@ function handleClick (e) {
       } 
       clear()
       board[r][c] = 1
-      console.log(r)
       turn = -1
     
     //deselecting the piece to choose another
