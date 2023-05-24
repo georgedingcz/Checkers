@@ -176,7 +176,7 @@ function handleClick (e) {
   
   //movements and options
   if (turn === 1) {
-  
+ 
     //letting the options appear
     if (board[r][c] === 1) {
       antiOtherOption()
