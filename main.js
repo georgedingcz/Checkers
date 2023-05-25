@@ -167,13 +167,13 @@ function handleClick (e) {
   const r = parseInt(itemClicked.getAttribute("row"))
   const c = parseInt(itemClicked.getAttribute("column"))
   
-  function oneDiagonal (rM, cM, checkOneSpace, makeOneSpace) {
+  function oneSquareDiagonal (rM, cM, checkOneSpace, makeOneSpace) {
     if (game.board[r + rM][c + cM] === checkOneSpace) {
       game.board[r + rM][c + cM] = makeOneSpace
     }
   }
 
-  function twoDiagonal (rM, cM, checkOneSpace, makeOneSpace, checkTwoSpaces, makeTwoSpaces) {
+  function twoSquaresDiagonal (rM, cM, checkOneSpace, makeOneSpace, checkTwoSpaces, makeTwoSpaces) {
     if (game.board[r + rM][c + cM] === checkOneSpace) {
       if (game.board[r + 2*rM][c + 2*cM] === checkTwoSpaces) {
         game.board[r + rM][c + cM] = makeOneSpace
@@ -184,57 +184,63 @@ function handleClick (e) {
 
   //movements and options
   if (game.turn === 1) {
+    //to show options
     if (game.board[r][c] === 1) {
       antiOtherOption()
 
-      oneDiagonal(-1,-1,0,3)
-      oneDiagonal(-1,1,0,3)
+      oneSquareDiagonal(-1,-1,0,3)
+      oneSquareDiagonal(-1,1,0,3)
 
-      twoDiagonal(-1,-1,-1,-1,0,3)
-      twoDiagonal(-1,1,-1,-1,0,3)
+      twoSquaresDiagonal(-1,-1,-1,-1,0,3)
+      twoSquaresDiagonal(-1,1,-1,-1,0,3)
 
       game.board[r][c] = 2
+    //to choose an option
     } else if (game.board[r][c] === 3) {
       if (r === 0) {
         greenReached()
       }
-      oneDiagonal(1,1,2,0)
-      oneDiagonal(1,-1,2,0)
+      oneSquareDiagonal(1,1,2,0)
+      oneSquareDiagonal(1,-1,2,0)
 
-      twoDiagonal(1,1,-1,0,2,0)
-      twoDiagonal(1,-1,-1,0,2,0)
+      twoSquaresDiagonal(1,1,-1,0,2,0)
+      twoSquaresDiagonal(1,-1,-1,0,2,0)
 
       game.board[r][c] = 1
       clear() 
       game.turn = -1 
+    //to uncheck a piece
     } else if (game.board[r][c] === 2) {
       game.board[r][c] = 1
       clear()
     }
   } else if (game.turn === -1) {
+    //to show options
     if (game.board[r][c] === -1) {
       antiOtherOption()
 
-      oneDiagonal(1,-1,0,3)
-      oneDiagonal(1,1,0,3)
+      oneSquareDiagonal(1,-1,0,3)
+      oneSquareDiagonal(1,1,0,3)
 
-      twoDiagonal(1,-1,1,1,0,3)
-      twoDiagonal(1,1,1,1,0,3)
+      twoSquaresDiagonal(1,-1,1,1,0,3)
+      twoSquaresDiagonal(1,1,1,1,0,3)
 
       game.board[r][c] = -2
+    //to choose an option
     } else if (game.board[r][c] === 3) {
       if (r === 7) {
         redReached()
       }
-      oneDiagonal(-1,1,-2,0)
-      oneDiagonal(-1,-1,-2,0)
+      oneSquareDiagonal(-1,1,-2,0)
+      oneSquareDiagonal(-1,-1,-2,0)
 
-      twoDiagonal(-1,1,1,0,-2,0)
-      twoDiagonal(-1,-1,1,0,-2,0)
+      twoSquaresDiagonal(-1,1,1,0,-2,0)
+      twoSquaresDiagonal(-1,-1,1,0,-2,0)
 
       game.board[r][c] = -1
       clear() 
       game.turn = 1
+    //to uncheck a piece
     } else if (game.board[r][c] === -2) {
       game.board[r][c] = -1
       clear()

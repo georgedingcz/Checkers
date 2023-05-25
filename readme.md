@@ -6,7 +6,7 @@ As part of a project submission, I made a game loosely based on American Checker
 
 ## Deployment
 
-The game is deployed on [Vercel](checkers-three.vercel.app) and the files are hosted on [Github](https://github.com/soursorbet/Checkers).
+The game is deployed on [Vercel](https://checkers-three.vercel.app/) and the files are hosted on [Github](https://github.com/soursorbet/Checkers).
 
 ## Technologies & Tools Used
 
