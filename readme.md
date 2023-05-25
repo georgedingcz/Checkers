@@ -32,7 +32,6 @@ The game starts with 12 pieces on each side of the board, with Player Green star
 1. If one of the player loses all the pieces, the opponent wins
 2. if one of the player has a piece that reached the opposite end of the board, the player wins
 
-
 ## Approach to Development
 
 The project was broken down into these stages:
@@ -43,6 +42,10 @@ The project was broken down into these stages:
 4. Styling (1 day)
 
 ## Key Learnings
+
+One of the main key learnings for the project was gaining a better understanding of the Model-View-Controller approach. It took me a significant amount of time and effort to change the way I approached the project and while the final product is not an ideal example, I will continue to improve and work on future projects using this approach.
+
+In addition, I have also gotten more proficient with conditionals and scoping, whether it is from building the game or fixing bugs.
 
 ## Breakdown & Analysis of the Codes
 
@@ -59,6 +62,7 @@ For the purposes of styling, I used online resources for the following with link
 4. [Red checker pieces](https://shorturl.at/wxHQT)
 5. [Green checker pieces](https://shorturl.at/jkT15)
 6. [Restart button](https://getcssscan.com/css-buttons-examples)
+7. [Tab Icon](https://shorturl.at/stIR3)
 
 ## Future Developments and Improvements
 
@@ -66,5 +70,4 @@ Taking into consideration the limited time available while I'm still taking clas
 
 1. Due to the way that I have written the game logic, it is currently unable to scale efficiently. Rewriting the game logic to allow for triple jumps and modifiable game boards will be a major development to work towards.
 2. Working on an AI opponent will also be considered
-
-## Summary
+3. Making the game mobile-friendly
