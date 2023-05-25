@@ -62,21 +62,6 @@ function antiOtherOption () {
   })
 }
 
-function countPieces () {
-  //clear the existing count so that it does not stack when I render
-  game.redCount = 0
-  game.greenCount = 0
-  game.board.forEach(function (boardRow){
-    boardRow.forEach(function(piece) {
-      if (piece === 1 || piece === 2) {
-        game.greenCount ++
-      } else if (piece === -1 || piece === -2) {
-        game.redCount ++
-      }
-    })
-  return game.greenCount, game.redCount
-})}
-
 function greenReached () {
   winner.innerText = "Player Green has won"
   playerTurn.hidden = true
@@ -119,7 +104,7 @@ function renderBoard () {
           checkerPieces.classList.add("greenCheckersPiece")
         } else if (game.board[rowIndex][columnIndex] === 0) {
           checkerPieces.classList.add("noCheckersPiece")
-        } else if (game.board[rowIndex][columnIndex] === 3 || game.board[rowIndex][columnIndex] === -3) {
+        } else if (game.board[rowIndex][columnIndex] === 3) {
           checkerPieces.classList.add("optionCheckersPiece")
         } else if (game.board[rowIndex][columnIndex] === -2) {
           checkerPieces.classList.add("optionRedCheckersPiece")
@@ -131,16 +116,20 @@ function renderBoard () {
 }
 
 function renderRemaining () {
-  countPieces()
+  game.redCount = 0
+  game.greenCount = 0
+  game.board.forEach(function (boardRow){
+    boardRow.forEach(function(piece) {
+      if (piece === 1 || piece === 2) {
+        game.greenCount ++
+      } else if (piece === -1 || piece === -2) {
+        game.redCount ++
+      }
+    })
+  })
   playerRedPieces.innerText = `:${game.redCount}`
   playerGreenPieces.innerText = `:${game.greenCount}`
-  if (game.greenCount === 0) {
-    winner.innerText = "Player Red has won"
-    playerTurn.hidden = true
-  } else if (game.redCount === 0) {
-    winner.innerText = "Player Green has won"
-    playerTurn.hidden = true
-  }
+  return game.redCount, game.greenCount
 }
 
 function renderTurn () {
@@ -151,10 +140,21 @@ function renderTurn () {
   }
 }
 
+function renderWinner () {
+  if (game.greenCount === 0) {
+    winner.innerText = "Player Red has won"
+    playerTurn.hidden = true
+  } else if (game.redCount === 0) {
+    winner.innerText = "Player Green has won"
+    playerTurn.hidden = true
+  }
+}
+
 function render () {
   renderBoard()
   renderRemaining()
   renderTurn()
+  renderWinner()
 }
 
 //add event listener for the board
