@@ -4,7 +4,6 @@ const game = {
   greenCount: 0,
   redCount: 0,
 }
-
 //cached elements
 const playerRedPieces = document.querySelector("#playerRedPieces");
 const playerGreenPieces = document.querySelector("#playerGreenPieces");
@@ -12,8 +11,8 @@ const playerTurn = document.querySelector("#playerTurn");
 const boardSection = document.querySelector("#board")
 const winner = document.querySelector("#winner")
 const restart = document.querySelector("#restart")
-
 //functions
+//to initialise
 function initialise () {
   game.board = [
     [-1,null,-1,null,-1,null,-1,null],
@@ -30,7 +29,7 @@ function initialise () {
   winner.innerText = ""
   playerTurn.hidden = false
 }
-
+//to clear alternative options
 function clear () {
   //clear options
   game.board.forEach(function (boardRow, rowIndex){
@@ -41,7 +40,7 @@ function clear () {
     })
   })
 }
-
+//to restore state of existing checked piece
 function antiOtherOption () {
   game.board.forEach(function (boardRow, rowIndex){
     boardRow.forEach(function(piece, columnIndex) {
@@ -61,19 +60,18 @@ function antiOtherOption () {
     })
   })
 }
-
+//when green piece reaches the opposite end
 function greenReached () {
   winner.innerText = "Player Green has won"
   playerTurn.hidden = true
 }
-
+//when red piece reaches the opposite end
 function redReached () {
   winner.innerText = "Player Red has won"
   playerTurn.hidden = true
 }
-
-
 //renders
+//render the board
 function renderBoard () {
   //clear the board
   while (boardSection.firstChild) {
@@ -97,7 +95,7 @@ function renderBoard () {
         squareElement.append(checkerPieces)
         checkerPieces.setAttribute("row", rowIndex)
         checkerPieces.setAttribute("column", columnIndex)
-        //this is to show how the board on the screen will change based on the values in the board array in javascript
+        //add piece colours
         if (game.board[rowIndex][columnIndex] === -1) {
           checkerPieces.classList.add("redCheckersPiece")
         } else if (game.board[rowIndex][columnIndex] === 1) {
@@ -114,7 +112,7 @@ function renderBoard () {
       })
   })
 }
-
+//render remaining pieces
 function renderRemaining () {
   game.redCount = 0
   game.greenCount = 0
@@ -131,7 +129,7 @@ function renderRemaining () {
   playerGreenPieces.innerText = `:${game.greenCount}`
   return game.redCount, game.greenCount
 }
-
+//render player turn
 function renderTurn () {
   if (game.turn === 1) {
     playerTurn.innerText = "Player Green's turn"
@@ -139,7 +137,7 @@ function renderTurn () {
     playerTurn.innerText = "Player Red's turn"
   }
 }
-
+//render winner
 function renderWinner () {
   if (game.greenCount === 0) {
     winner.innerText = "Player Red has won"
@@ -149,30 +147,28 @@ function renderWinner () {
     playerTurn.hidden = true
   }
 }
-
+//to render all at once
 function render () {
   renderBoard()
   renderRemaining()
   renderTurn()
   renderWinner()
 }
-
 //add event listener for the board
 boardSection.addEventListener("click", handleClick)
 restart.addEventListener("click", initialise)
-
 //handle click
 function handleClick (e) {
   const itemClicked = e.target
   const r = parseInt(itemClicked.getAttribute("row"))
   const c = parseInt(itemClicked.getAttribute("column"))
-  
+  //to check and change one square diagonally away
   function oneSquareDiagonal (rM, cM, checkOneSpace, makeOneSpace) {
     if (game.board[r + rM][c + cM] === checkOneSpace) {
       game.board[r + rM][c + cM] = makeOneSpace
     }
   }
-
+  //to check and change two squares diagonally away
   function twoSquaresDiagonal (rM, cM, checkOneSpace, makeOneSpace, checkTwoSpaces, makeTwoSpaces) {
     if (game.board[r + rM][c + cM] === checkOneSpace) {
       if (game.board[r + 2*rM][c + 2*cM] === checkTwoSpaces) {
@@ -181,7 +177,6 @@ function handleClick (e) {
       }
     }
   }
-
   //movements and options
   if (game.turn === 1) {
     //to show options
@@ -193,7 +188,6 @@ function handleClick (e) {
 
       twoSquaresDiagonal(-1,-1,-1,-1,0,3)
       twoSquaresDiagonal(-1,1,-1,-1,0,3)
-
       game.board[r][c] = 2
     //to choose an option
     } else if (game.board[r][c] === 3) {
@@ -248,6 +242,5 @@ function handleClick (e) {
   }
   render()
 }
-
+//initialise the game
 initialise()
-
