@@ -47,10 +47,17 @@ One of the main key learnings for the project was gaining a better understanding
 
 In addition, I have also gotten more proficient with conditionals and scoping, whether it is from building the game or fixing bugs.
 
-## Breakdown & Analysis of the Codes
+## Screenshots of the game
 
 How the initial state of the game will look like:
 ![alt text](/screenshots/startscreen.png)
+
+Capturing through double jump:
+![alt text](/screenshots/doublejump1.png)
+![alt text](/screenshots/doublejump2.png)
+
+Winning the game:
+![alt text](/screenshots/zeroRed.png)
 
 ## Online resources for styling
 
