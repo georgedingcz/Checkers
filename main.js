@@ -35,7 +35,7 @@ function initialise () {
   ];
   game.turn = 1;
   render()
-  winner.innerText = "There is no winner yet"
+  winner.innerText = ""
   playerTurn.hidden = false
 }
 

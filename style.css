@@ -91,7 +91,7 @@ h1 {
   background-color: black;
   display: flex;
   flex-wrap: wrap;
-  margin: 0px;
+  margin: auto 0px auto 0px;
 }
 
 .whiteSquare {
