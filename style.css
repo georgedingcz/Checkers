@@ -26,8 +26,9 @@ body {
   animation-timing-function: linear;
 }
 
-#test {
+#middleSection {
   display: flex;
+  margin: auto;
 }
 
 h1 {
@@ -40,6 +41,19 @@ h1 {
   margin: auto;
   width: 200px;
   height: 100px;
+  display: flex;
+}
+
+#playerGreenIcon {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background-image: url(https://media.istockphoto.com/id/1264039988/vector/leaves-separated-symbol-icon-sign.jpg?s=612x612&w=0&k=20&c=zAHxPyOWM6QR5Ucy5A1ArXaAdA32TWdmW5VI2MH08bU=);
+  background-size: cover;
+}
+
+#playerGreenPieces{
+  margin: auto auto auto 0px;
 }
 
 .playerRed {
@@ -47,6 +61,20 @@ h1 {
   margin: auto;
   width: 200px;
   height: 100px;
+  display: flex;
+}
+
+#playerRedIcon {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background-image: url(https://previews.123rf.com/images/victor85/victor851711/victor85171100186/90388322-fire-flame-circle-icon-with-long-shadow-flat-design-style-fire-flame-simple-silhouette-modern.jpg);
+  background-size: cover;
+  margin: auto 0px auto auto;
+}
+
+#playerRedPieces{
+  margin: auto 0px auto 0px;
 }
 
 #playerTurn {
@@ -63,7 +91,7 @@ h1 {
   background-color: black;
   display: flex;
   flex-wrap: wrap;
-  margin: auto;
+  margin: 0px;
 }
 
 .whiteSquare {
@@ -200,8 +228,8 @@ h1 {
   display: inline-flex;
   fill: currentcolor;
   font-family: "Google Sans",Roboto,Arial,sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 800;
   height: 48px;
   justify-content: center;
   letter-spacing: .25px;
