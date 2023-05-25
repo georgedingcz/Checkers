@@ -50,14 +50,17 @@ In addition, I have also gotten more proficient with conditionals and scoping, w
 ## Screenshots of the game
 
 How the initial state of the game will look like:
-![alt text](/screenshots/startscreen.png)
+
+1. ![alt text](/screenshots/startscreen.png)
 
 Capturing through double jump:
-![alt text](/screenshots/doublejump1.png)
-![alt text](/screenshots/doublejump2.png)
+
+1. ![alt text](/screenshots/doublejump1.png)
+2. ![alt text](/screenshots/doublejump2.png)
 
 Winning the game:
-![alt text](/screenshots/zeroRed.png)
+
+1. ![alt text](/screenshots/zeroRed.png)
 
 ## Online resources for styling
 
