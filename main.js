@@ -16,10 +16,6 @@ const restart = document.querySelector("#restart")
 //functions
 function initialise () {
   game.board = [
-    [],
-    [],
-    [],
-    [],
     [-1,null,-1,null,-1,null,-1,null],
     [null,-1,null,-1,null,-1,null,-1],
     [-1,null,-1,null,-1,null,-1,null],
@@ -28,10 +24,6 @@ function initialise () {
     [null,1,null,1,null,1,null,1],
     [1,null,1,null,1,null,1,null],
     [null,1,null,1,null,1,null,1],
-    [],
-    [],
-    [],
-    [],
   ];
   game.turn = 1;
   render()
@@ -60,7 +52,7 @@ function antiOtherOption () {
           game.board[rowIndex][columnIndex] = 1
         }
       } else if (game.turn === -1) {
-        if (piece === -3) {
+        if (piece === 3) {
           game.board[rowIndex][columnIndex] = 0
         } else if (piece === -2) {
           game.board[rowIndex][columnIndex] = -1
@@ -175,187 +167,74 @@ function handleClick (e) {
   const r = parseInt(itemClicked.getAttribute("row"))
   const c = parseInt(itemClicked.getAttribute("column"))
   
+  function oneDiagonal (rM, cM, checkOneSpace, makeOneSpace) {
+    if (game.board[r + rM][c + cM] === checkOneSpace) {
+      game.board[r + rM][c + cM] = makeOneSpace
+    }
+  }
+
+  function twoDiagonal (rM, cM, checkOneSpace, makeOneSpace, checkTwoSpaces, makeTwoSpaces) {
+    if (game.board[r + rM][c + cM] === checkOneSpace) {
+      if (game.board[r + 2*rM][c + 2*cM] === checkTwoSpaces) {
+        game.board[r + rM][c + cM] = makeOneSpace
+        game.board[r + 2*rM][c + 2*cM] = makeTwoSpaces
+      }
+    }
+  }
+
   //movements and options
   if (game.turn === 1) {
- 
-    //letting the options appear
     if (game.board[r][c] === 1) {
       antiOtherOption()
-      if (game.board[r-1][c-1] === -1 && game.board[r-2][c-2] === 0) {
-        //two jumps; both to the left
-        if (game.board[r-3][c-3] === -1 && game.board[r-4][c-4] === 0) {
-          game.board[r-4][c-4] = 3
-        //two jumps; left followed by right
-        } else if (game.board[r-3][c-1] === -1 && game.board[r-4][c] === 0) {
-          game.board[r-4][c] = 3
-        //both sides red
-        } else if (game.board[r-1][c+1] === -1 && game.board[r-2][c+2] === 0) {
-          game.board[r-2][c-2] = 3
-          game.board[r-2][c+2] = 3
-        //left side red
-        } else {
-          game.board[r-2][c-2] = 3
-        }
-      } else if (game.board[r-1][c+1] === -1 && game.board[r-2][c+2] === 0) {
-        //two jumps; both to the right
-        if (game.board[r-3][c+3] === -1 && game.board[r-4][c+4] === 0) {
-          game.board[r-4][c+4] = 3
-        //two jumps; right followed by left
-        } else if (game.board[r-3][c+1] === -1 && game.board[r-4][c] === 0) {
-          game.board[r-4][c] = 3
-        //right side red
-        } else {
-          game.board[r-2][c+2] = 3
-        }
-      } else if (game.board[r-1][c-1] === 0) {
-        //both sides blank
-        if (game.board[r-1][c+1] === 0) {
-          game.board[r-1][c-1] = 3
-          game.board[r-1][c+1] = 3
-        //left side blank
-        } else {
-          game.board[r-1][c-1] = 3
-        }
-      //right side blank
-      } else if (game.board[r-1][c+1] === 0) {
-        game.board[r-1][c+1] = 3
-      }
-      //selected green checker turns to optionGreen
-      game.board[r][c] = 2
 
-    //selecting the option
+      oneDiagonal(-1,-1,0,3)
+      oneDiagonal(-1,1,0,3)
+
+      twoDiagonal(-1,-1,-1,-1,0,3)
+      twoDiagonal(-1,1,-1,-1,0,3)
+
+      game.board[r][c] = 2
     } else if (game.board[r][c] === 3) {
-      //game ends if one piece reached the end
-      if (r === 4) {
+      if (r === 0) {
         greenReached()
       }
-      //two jumps; both to the left
-      if (game.board[r+4][c+4] === 2) {
-        //red pieces are removed
-        game.board[r+1][c+1] = 0
-        game.board[r+3][c+3] = 0
-      //two jumps; both to the right
-      } else if (game.board[r+4][c-4] === 2) {
-        //red pieces are removed
-        game.board[r+1][c-1] = 0
-        game.board[r+3][c-3] = 0
-      //two jumps; left followed by right
-      } else if (game.board[r+4][c] === 2 && game.board[r+1][c-1] === -1 && game.board[r+3][c-1] === -1) {
-        //red pieces are removed
-        game.board[r+1][c-1] = 0
-        game.board[r+3][c-1] = 0
-      //two jumps; right followed by left
-      } else if (game.board[r+4][c] === 2 && game.board[r+1][c+1] === -1 && game.board[r+3][c+1] === -1) {
-        //red pieces are removed
-        game.board[r+1][c+1] = 0
-        game.board[r+3][c+1] = 0
-      //left being red and was selected
-      } else if (game.board[r+2][c+2] === 2) {
-        //red piece is removed
-        game.board[r+1][c+1] = 0
-      //right being red and was selected
-      } else if (game.board[r+2][c-2] === 2) {
-        //red piece is removed
-        game.board[r+1][c-1] = 0
-      } 
-      clear()
+      oneDiagonal(1,1,2,0)
+      oneDiagonal(1,-1,2,0)
+
+      twoDiagonal(1,1,-1,0,2,0)
+      twoDiagonal(1,-1,-1,0,2,0)
+
       game.board[r][c] = 1
-      game.turn = -1
-    
-    //deselecting the piece to choose another
+      clear() 
+      game.turn = -1 
     } else if (game.board[r][c] === 2) {
       game.board[r][c] = 1
       clear()
     }
-  } 
-  
-  else if (game.turn === -1) {
-
-    //letting the options appear
+  } else if (game.turn === -1) {
     if (game.board[r][c] === -1) {
       antiOtherOption()
-      if (game.board[r+1][c-1] === 1 && game.board[r+2][c-2] === 0) {
-        //two jumps; both to the left
-        if (game.board[r+3][c-3] === 1 &&  game.board[r+4][c-4] === 0) {
-          game.board[r+4][c-4] = -3
-        //two jumps; left followed by right
-        } else if (game.board[r+3][c-1] === 1 && game.board[r+4][c] === 0) {
-          game.board[r+4][c] = -3
-        //both sides green
-        } else if (game.board[r+1][c+1] === 1 && game.board[r+2][c+2] === 0) {
-          game.board[r+2][c-2] = -3
-          game.board[r+2][c+2] = -3
-        //left side green
-        } else {
-          game.board[r+2][c-2] = -3
-        }
-      } else if (game.board[r+1][c+1] === 1 && game.board[r+2][c+2] === 0) {
-        //two jumps; both to the right
-        if (game.board[r+3][c+3] === 1 && game.board[r+4][c+4] === 0) {
-          game.board[r+4][c+4] = -3
-        //two jumps; right followed by left
-        } else if (game.board[r+3][c+1] === 1 && game.board[r+4][c] === 0) {
-          game.board[r+4][c] = -3
-        //right side green
-        } else {
-          game.board[r+2][c+2] = -3
-        }
-      } else if (game.board[r+1][c-1] === 0) {
-        //both sides blank
-        if (game.board[r+1][c+1] === 0) {
-          game.board[r+1][c-1] = -3
-          game.board[r+1][c+1] = -3
-        //left side blank
-        } else {
-          game.board[r+1][c-1] = -3
-        }
-      //right side blank
-      } else if (game.board[r+1][c+1] === 0) {
-        game.board[r+1][c+1] = -3
-      }
-      //selected red checker turns to optionRed
-      game.board[r][c] = -2
 
-    // selecting the option
-    } else if (game.board[r][c] === -3) {
-      //game ends if one piece reached the end
-      if (r === 11) {
+      oneDiagonal(1,-1,0,3)
+      oneDiagonal(1,1,0,3)
+
+      twoDiagonal(1,-1,1,1,0,3)
+      twoDiagonal(1,1,1,1,0,3)
+
+      game.board[r][c] = -2
+    } else if (game.board[r][c] === 3) {
+      if (r === 7) {
         redReached()
       }
-      //two jumps; both to the left
-      if (game.board[r-4][c+4] === -2) {
-        //red pieces are removed
-        game.board[r-1][c+1] = 0
-        game.board[r-3][c+3] = 0
-      //two jumps; both to the right
-      } else if (game.board[r-4][c-4] === -2) {
-        //red pieces are removed
-        game.board[r-1][c-1] = 0
-        game.board[r-3][c-3] = 0
-      //two jumps; left followed by right
-      } else if (game.board[r-4][c] === -2 && game.board[r-1][c-1] === 1 && game.board[r-3][c-1] === 1) {
-        //red pieces are removed
-        game.board[r-1][c-1] = 0
-        game.board[r-3][c-1] = 0
-      //two jumps; right followed by left
-      } else if (game.board[r-4][c] === -2 && game.board[r-1][c+1] === 1 && game.board[r-3][c+1] === 1) {
-        //red pieces are removed
-        game.board[r-1][c+1] = 0
-        game.board[r-3][c+1] = 0
-      //left being green and was selected
-      } else if (game.board[r-2][c+2] === -2) {
-        //green piece is removed
-        game.board[r-1][c+1] = 0
-      //right being green and was selected
-      } else if (game.board[r-2][c-2] === -2) {
-        //green piece is removed
-        game.board[r-1][c-1] = 0
-      }
-      clear()
-      game.board[r][c] = -1
-      game.turn = 1
+      oneDiagonal(-1,1,-2,0)
+      oneDiagonal(-1,-1,-2,0)
 
-    //deselecting the piece to choose another
+      twoDiagonal(-1,1,1,0,-2,0)
+      twoDiagonal(-1,-1,1,0,-2,0)
+
+      game.board[r][c] = -1
+      clear() 
+      game.turn = 1
     } else if (game.board[r][c] === -2) {
       game.board[r][c] = -1
       clear()
@@ -365,5 +244,4 @@ function handleClick (e) {
 }
 
 initialise()
-
 

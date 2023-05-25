@@ -2,7 +2,7 @@
 
 ## Project Description
 
-As part of a project submission, I made a game of American Checkers with rules slightly modified. The technologies and tools used for the project are based on what I have learnt thus far.
+As part of a project submission, I made a game loosely based on American Checkers with rules modified. The technologies and tools used for the project are based on what I have learnt thus far.
 
 ## Deployment
 
@@ -21,16 +21,18 @@ The game is deployed on [Vercel](checkers-three.vercel.app) and the files are ho
 
 ## Game Description
 
-The rules of the game are based on American Checkers with the exception of the King piece and triple-jumps that were not made available at this point in time.
+The rules of the game are loosely based on the rules of [American Checkers](https://www.usatoday.com/story/graphics/2023/01/23/how-to-play-checkers-rules-strategy/10795787002/#:~:text=Checkers%20can%20only%20move%20diagonally,row%20of%20the%20opposite%20side.).
 
-You may wish to refer to the link [here](https://www.usatoday.com/story/graphics/2023/01/23/how-to-play-checkers-rules-strategy/10795787002/#:~:text=Checkers%20can%20only%20move%20diagonally,row%20of%20the%20opposite%20side.)for more details on the rules.
-
-## High Concept
-
-The game starts with 12 pieces on each side of the board, with Player Green starting first. The game in two scenarios:
+The game starts with 12 pieces on each side of the board, with Player Green starting first. The game ends in two scenarios:
 
 1. If one of the player loses all the pieces, the opponent wins
 2. if one of the player has a piece that reached the opposite end of the board, the player wins
+
+The following changes were made:
+
+1. Players are not forced to eat the opponent's piece
+2. Double and triple jumps are not available
+3. Rather than making a king piece, the player that has a piece reach the opposite end of the board wins
 
 ## Approach to Development
 
@@ -53,14 +55,13 @@ In addition, I have also gotten more proficient with conditionals and scoping, w
 
 ![alt text](/screenshots/startscreen.png)
 
-### Capturing through double jump:
+### Capturing through a jump:
 
-![alt text](/screenshots/doublejump1.png)
-![alt text](/screenshots/doublejump2.png)
+![alt text](/screenshots/jump.png)
 
 ### Winning the game:
 
-1. ![alt text](/screenshots/zeroRed.png)
+![alt text](/screenshots/zeroRed.png)
 
 ## Online resources for styling
 
@@ -78,6 +79,6 @@ For the purposes of styling, I used online resources for the following with link
 
 Taking into consideration the limited time available while I'm still taking classes, future developments, should it occur, will happen at a much later date. Nevertheless, these are the key areas that I will be working towards:
 
-1. Due to the way that I have written the game logic, it is currently unable to scale efficiently. Rewriting the game logic to allow for triple jumps and modifiable game boards will be a major development to work towards.
-2. Working on an AI opponent will also be considered
-3. Making the game mobile-friendly
+1. Adding double and triple jumps
+2. Making the game mobile-friendly
+3. Working on an AI opponent will also be considered
