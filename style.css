@@ -33,7 +33,7 @@ body {
 
 h1 {
   font-size: 50px;
-  font-family:cursive;
+  font-family: cursive;
 }
 
 .playerGreen {
@@ -48,7 +48,7 @@ h1 {
   border-radius: 50%;
   width: 80px;
   height: 80px;
-  background-image: url(https://media.istockphoto.com/id/1264039988/vector/leaves-separated-symbol-icon-sign.jpg?s=612x612&w=0&k=20&c=zAHxPyOWM6QR5Ucy5A1ArXaAdA32TWdmW5VI2MH08bU=);
+  background-image: url("./OnlinePictures/greenIcon.jpeg");
   background-size: cover;
 }
 
@@ -68,7 +68,7 @@ h1 {
   border-radius: 50%;
   width: 80px;
   height: 80px;
-  background-image: url(https://previews.123rf.com/images/victor85/victor851711/victor85171100186/90388322-fire-flame-circle-icon-with-long-shadow-flat-design-style-fire-flame-simple-silhouette-modern.jpg);
+  background-image: url("./OnlinePictures/redIcon.webp");
   background-size: cover;
   margin: auto 0px auto auto;
 }
@@ -97,7 +97,7 @@ h1 {
 .whiteSquare {
   width: 50px;
   height: 50px;
-  background-image: url(https://shorturl.at/bGHK9);
+  background-image: url("./OnlinePictures/whiteSquare.jpeg");
   background-size: 50px;
   border: solid 1px black;
   display: flex;
@@ -108,7 +108,7 @@ h1 {
 .blackSquare {
   width: 50px;
   height: 50px;
-  background-image: url(https://illustoon.com/photo/7263.png);
+  background-image: url("./OnlinePictures/blackSquare.png");
   background-size: 50px;
   border: solid 1px black;
   display: flex;
@@ -120,7 +120,7 @@ h1 {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-image: url(https://shorturl.at/wxHQT);
+  background-image: url("./OnlinePictures/redIcon.webp");
   background-size: cover;
 }
 
@@ -128,7 +128,7 @@ h1 {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-image: url(https://shorturl.at/jkT15);
+  background-image: url("./OnlinePictures/greenIcon.jpeg");
   background-size: cover;
 }
 
@@ -141,7 +141,7 @@ h1 {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-image: url(https://www.shutterstock.com/image-vector/modern-black-white-simple-question-260nw-1892291464.jpg);
+  background-image: url("./OnlinePictures/optionIcon.webp");
   background-size: cover;
 }
 
@@ -149,7 +149,7 @@ h1 {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-image: url(https://previews.123rf.com/images/victor85/victor851711/victor85171100186/90388322-fire-flame-circle-icon-with-long-shadow-flat-design-style-fire-flame-simple-silhouette-modern.jpg);
+  background-image: url("./OnlinePictures/redIcon.webp");
   background-size: cover;
   opacity: 0.3;
 }
@@ -158,7 +158,7 @@ h1 {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  background-image: url(https://media.istockphoto.com/id/1264039988/vector/leaves-separated-symbol-icon-sign.jpg?s=612x612&w=0&k=20&c=zAHxPyOWM6QR5Ucy5A1ArXaAdA32TWdmW5VI2MH08bU=);
+  background-image: url("./OnlinePictures/greenIcon.jpeg");
   background-size: cover;
   opacity: 0.3;
 }
