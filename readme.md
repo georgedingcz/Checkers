@@ -49,16 +49,16 @@ In addition, I have also gotten more proficient with conditionals and scoping, w
 
 ## Screenshots of the game
 
-How the initial state of the game will look like:
+### How the initial state of the game will look like:
 
-1. ![alt text](/screenshots/startscreen.png)
+![alt text](/screenshots/startscreen.png)
 
-Capturing through double jump:
+### Capturing through double jump:
 
-1. ![alt text](/screenshots/doublejump1.png)
-2. ![alt text](/screenshots/doublejump2.png)
+![alt text](/screenshots/doublejump1.png)
+![alt text](/screenshots/doublejump2.png)
 
-Winning the game:
+### Winning the game:
 
 1. ![alt text](/screenshots/zeroRed.png)
 
