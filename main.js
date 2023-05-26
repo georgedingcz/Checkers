@@ -15,6 +15,8 @@ const restart = document.querySelector("#restart")
 //to initialise
 function initialise () {
   game.board = [
+    [],
+    [],
     [-1,null,-1,null,-1,null,-1,null],
     [null,-1,null,-1,null,-1,null,-1],
     [-1,null,-1,null,-1,null,-1,null],
@@ -23,6 +25,8 @@ function initialise () {
     [null,1,null,1,null,1,null,1],
     [1,null,1,null,1,null,1,null],
     [null,1,null,1,null,1,null,1],
+    [],
+    [],
   ];
   game.turn = 1;
   render()
