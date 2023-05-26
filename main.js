@@ -195,7 +195,7 @@ function handleClick (e) {
       game.board[r][c] = 2
     //to choose an option
     } else if (game.board[r][c] === 3) {
-      if (r === 0) {
+      if (r === 2) {
         greenReached()
       }
       oneSquareDiagonal(1,1,2,0)
@@ -226,7 +226,7 @@ function handleClick (e) {
       game.board[r][c] = -2
     //to choose an option
     } else if (game.board[r][c] === 3) {
-      if (r === 7) {
+      if (r === 9) {
         redReached()
       }
       oneSquareDiagonal(-1,1,-2,0)
